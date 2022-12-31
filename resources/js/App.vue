@@ -1,12 +1,14 @@
 <template>
-    <div class="flex justify-center mt-3">
-        <router-link v-if="token" :to="{name: 'user.personal'}" class="mr-3">Personal</router-link>
-        <router-link v-if="!token" :to="{name: 'user.login'}" class="mr-3">Login</router-link>
-        <router-link v-if="!token" :to="{name: 'user.registration'}" class="mr-3">Registration</router-link>
-        <a href="#" v-if="token" @click.prevent="logout">Logout</a>
-    </div>
     <div>
-        <router-view  class="flex justify-center mt-5"></router-view>
+        <div class="flex justify-between p-8 w-96 mx-auto">
+
+            <router-link v-if="!token" :to="{ name: 'user.login'}">Login</router-link>
+            <router-link v-if="token" :to="{ name: 'user.personal'}">Personal</router-link>
+            <router-link v-if="!token" :to="{ name: 'user.registration'}">Registration</router-link>
+            <a v-if="token" @click.prevent="logout" href="#">Logout</a>
+        </div>
+
+        <router-view></router-view>
     </div>
 </template>
 
