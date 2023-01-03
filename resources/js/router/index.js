@@ -9,9 +9,14 @@ const router = createRouter({
             component: () => import('../views/user/Index.vue')
         },
         { 
-            path: '/users/:id', 
+            path: '/users/:id/show', 
             name: 'user.show', 
             component: () => import('../views/user/Show.vue')
+        },
+        { 
+            path: '/users/feed', 
+            name: 'user.feed', 
+            component: () => import('../views/user/Feed.vue')
         },
         { 
             path: '/users/login', 
