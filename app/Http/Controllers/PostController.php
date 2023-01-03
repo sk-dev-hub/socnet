@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
+    public function index(){
+        $posts = Post::where('user_id', auth()->id())->latest()->get();
+        return PostResource::collection($posts);
+    }
+    
     public function store(StoreRequest $request){
 
         $data = $request->validated();

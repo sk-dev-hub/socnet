@@ -1,6 +1,6 @@
 <template>
     <div class="w-96 mx-auto">
-        <div>
+        <div class="mb-5">
             <div>
                 <input v-model="title" type="text" placeholder="title" class="w-96 mb-3 p-2 rounded-xl border border-slate-400">
             </div>
@@ -23,23 +23,45 @@
                 <a @click.prevent="store" href="#" class="ml-auto  items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ">Publish</a>
             </div>
         </div>
+        <div v-if="posts" class="">
+            <h1 class="text-xl mb-4 pb-4 border-b border-gray-300  text-slate-800">Посты:</h1>
+            <Post v-for="post in posts" :post="post"></Post>
+        </div>
     </div>
 </template>
 
 <script>
+import Post from "../../components/Post.vue"
 
 export default {
     name: "Personal",
+
+    components: {
+        Post,
+    },
 
     data() {
         return {
             title: null,
             content: null,
             image: null,
+            posts: [],
         }
     },
 
+    mounted() {
+        this.getPosts()
+    },
+
     methods: {
+
+        getPosts(){
+            axios.get('/api/posts')
+            .then( res => {
+                this.posts = res.data.data
+            })
+        },
+
         store(){
             const id = this.image ? this.image.id : null
 
@@ -52,7 +74,8 @@ export default {
                 this.title = ''
                 this.content = ''
                 this.image = null
-                console.log(res)
+                
+                this.posts.unshift(res.data.data)
             })
         },
         selectFile() {

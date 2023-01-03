@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Resources\Post;
+namespace App\Http\Resources\User;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Models\PostImage;
 
-class PostResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,13 +14,11 @@ class PostResource extends JsonResource
      */
     public function toArray($request)
     {
-        $url = isset($this->image) ? $this->image->url : null;
-        
         return [
-            'title' => $this->title,
-            'content' => $this->content,
-            'image_url' => $url,
-            'date' => $this->date,
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'is_followed' => $this->is_followed ?? false,
         ];
     }
 }
