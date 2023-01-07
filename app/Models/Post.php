@@ -11,7 +11,7 @@ class Post extends Model
     protected $table = 'posts';
     protected $guarded = false;
 
-    protected $with = ['image'];
+    protected $with = ['image', 'likedUsers'];
     
 
     public function image(){
@@ -22,5 +22,12 @@ class Post extends Model
 
     public function getDateAttribute(){
         return $this->created_at->diffForHumans();
+    }
+
+
+    public function likedUsers(){
+
+        return $this->belongsToMany(User::class, 'liked_posts', 'post_id', 'user_id');
+
     }
 }
