@@ -30,4 +30,17 @@ class StoreRequest extends FormRequest
 
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'title.required' => 'Это поле обязательно для заполнения',
+            'content.required' => 'Это поле обязательно для заполнения',
+        ];
+    }
 }

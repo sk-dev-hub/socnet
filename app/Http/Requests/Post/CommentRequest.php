@@ -4,7 +4,7 @@ namespace App\Http\Requests\Post;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RepostRequest extends FormRequest
+class CommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class RepostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string',
-            'content' => 'required|string',
-
+            'body' => 'required|string',
+            'parent_id' => 'nullable|integer|exists:comments,id'
         ];
     }
 
@@ -38,8 +37,7 @@ class RepostRequest extends FormRequest
     public function messages()
     {
         return [
-            'title.required' => 'Это поле обязательно для заполнения',
-            'content.required' => 'Это поле обязательно для заполнения',
+            'body.required' => 'Это поле обязательно для заполнения',
         ];
     }
 }

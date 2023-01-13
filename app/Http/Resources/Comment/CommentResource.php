@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Post;
+namespace App\Http\Resources\Comment;
 
 use App\Http\Resources\User\UserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Models\PostImage;
 
-class RepostedPostResource extends JsonResource
+class CommentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,15 +15,19 @@ class RepostedPostResource extends JsonResource
      */
     public function toArray($request)
     {
-        $url = isset($this->image) ? $this->image->url : null;
-        
+
+        $name = isset($this->parent) ? $this->parent->user->name : null;
+
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'content' => $this->content,
-            'image_url' => $url,
-            'user' => new UserResource($this->user),
+            'body' => $this->body,
+            'date' => $this->date,
+            'answered_for_user' => $name,
+            'user' => new UserResource($this->user), 
 
+            
         ];
     }
+
+    
 }

@@ -1,12 +1,21 @@
 <template>
     <div class="w-96 mx-auto">
+        <Stat :stats="stats"/>
         <div class="mb-5">
-            <div>
-                <input v-model="title" type="text" placeholder="title" class="w-96 mb-3 p-2 rounded-xl border border-slate-400">
+            <div class="mb-3">
+                <input v-model="title" type="text" placeholder="title" class="w-96  p-2 rounded-xl border border-slate-400">
+                <div v-if="errors.title">
+                    <p v-for="error in errors.title" class="mt-1 text-sm text-rose-600" >{{ error }}</p>
+                </div>
             </div>
-            <div>
-                <textarea v-model="content" placeholder="content" class="w-96 mb-3 p-2 rounded-xl border border-slate-400"></textarea>
+
+            <div class="mb-3">
+                <textarea v-model="content" placeholder="content" class="w-96 p-2 rounded-xl border border-slate-400"></textarea>
+                <div v-if="errors.content">
+                    <p v-for="error in errors.content" class="mt-1 text-sm text-rose-600" >{{ error }}</p>
+                </div>
             </div>
+
             <div class="flex mb-3">
                 <div>
                     <input @change="storeImage" ref="file" type="file" class="hidden">
@@ -32,12 +41,15 @@
 
 <script>
 import Post from "../../components/Post.vue"
+import Stat from "../../components/Stat.vue"
+
 
 export default {
     name: "Personal",
 
     components: {
         Post,
+        Stat,
     },
 
     data() {
@@ -46,14 +58,24 @@ export default {
             content: null,
             image: null,
             posts: [],
+            errors: [],
+            stats: [],
         }
     },
 
     mounted() {
         this.getPosts()
+        this.getStats()
     },
 
     methods: {
+
+        getStats(){
+            axios.post('/api/users/stats', {user_id: null})
+            .then( res => {
+                this.stats = res.data.data 
+            })
+        },
 
         getPosts(){
             axios.get('/api/posts')
@@ -76,6 +98,9 @@ export default {
                 this.image = null
                 
                 this.posts.unshift(res.data.data)
+            })
+            .catch( e => {
+               this.errors = e.response.data.errors;
             })
         },
         selectFile() {

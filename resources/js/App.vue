@@ -2,12 +2,12 @@
     <div>
         <div class="flex justify-between p-8 w-96 mx-auto">
 
-            <router-link v-if="!token" :to="{ name: 'user.login'}">Login</router-link>
-            <router-link v-if="token" :to="{ name: 'user.index'}">Users</router-link>
-            <router-link v-if="token" :to="{ name: 'user.feed'}">Feed</router-link>
-            <router-link v-if="token" :to="{ name: 'user.personal'}">Personal</router-link>
-            <router-link v-if="!token" :to="{ name: 'user.registration'}">Registration</router-link>
-            <a v-if="token" @click.prevent="logout" href="#">Logout</a>
+            <router-link v-if="!token" :to="{ name: 'user.login'}">Логин</router-link>
+            <router-link v-if="token" :to="{ name: 'user.index'}">Юзеры</router-link>
+            <router-link v-if="token" :to="{ name: 'user.feed'}">Лента</router-link>
+            <router-link v-if="token" :to="{ name: 'user.personal'}">Моя страница</router-link>
+            <router-link v-if="!token" :to="{ name: 'user.registration'}">Регистрация</router-link>
+            <a v-if="token" @click.prevent="logout" href="#">Выход</a>
         </div>
 
         <router-view></router-view>
